@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block header%}
+    
+{% endblock %}
+{% block main %}
+
+    <div id="contenedor_registro">
+        <h2>Soporte creation</h2>
+        <div class="row">
+            <div class="col l6">
+                {{ form_start(form) }}
+                    <div class="">
+                        {{ form_label(form.asunto) }}
+                        {{ form_widget(form.asunto) }}
+                        <div id="errorAsunto">
+                            {{ form_errors(form.asunto) }}
+                        </div>
+                    </div>
+                    <div class="">
+                       
+                        {{ form_widget(form.tipoSoporte) }}
+                        {{ form_label(form.tipoSoporte) }}
+                        <div id="errorTipoSoporte">
+                            {{ form_errors(form.tipoSoporte) }}
+                        </div>
+                    </div> 
+                    <div class="">
+                        {{ form_label(form.descripcion) }}
+                        {{ form_widget(form.descripcion) }}
+                        <div id="errorAsunto">
+                            {{ form_errors(form.descripcion) }}
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Create" />
+                {{ form_end(form)}}
+           
+            </div>
+            <div class="col l6"></div>
+        </div>
+        <ul>
+            <li>
+                <a href="{{ path('mis_soportes') }}">Back to the list</a>
+            </li>
+        </ul>
+        <script>
+        $(function(){
+
+            $('select').material_select();
+        
+        });
+    </script>
+    
+    </div>
+    
+
+    
+{% endblock %}

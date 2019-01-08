@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+
+{% block menu_nav %}
+     <ul class="right hide-on-med-and-down">
+       <li class="mis_soportes" href="#"><a>Mis Soportes</a></li>
+       <li class="crear_soportes" href="#"><a>Crear Soporte</a></li>
+       <li class="logout"><a href="{{ path('logout')}}">Salir</a></li>
+
+     </ul>
+     <ul id="slide-out" class="side-nav">
+       <li class="soportes" ><a >Soportes<i class=" Tiny material-icons">home</i></a></li>
+       <li class="logout" ><a href="{{ path('logout')}}">Salir<i class=" Tiny material-icons">account_box</i></a></li>
+     </ul>
+ {% endblock %}
+{% block main %}
+   <div id="contenedor_misSoportes">
+    <h2>Mis Soportes</h2>
+    <div class="row">
+        
+        <div class="col l8 m8">
+            <table class="centered responsive-table bordered" >
+                <thead>
+                    <tr>
+                        
+                        <th>Asunto</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Descripción de solución</th>
+                        
+
+                    </tr>
+                </thead>
+                <tbody>
+                {% for soporte in soportes %}
+                    <tr>
+                        
+                        <td>{{ soporte.asunto }}</td>
+                        <td>{{ soporte.descripcion }}</td>
+                        <td>
+                            {% if soporte.estado == 1 %}
+                                Listo
+                            {% elseif soporte.estado == 2 %}
+                                Por hacer
+                            {% endif %}
+                              
+                        </td>
+                        <td>{{soporte.descripcionSolucion}}</td>
+
+                       <!-- <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('soporte_show', { 'id': soporte.id }) }}">show</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('soporte_edit', { 'id': soporte.id }) }}">edit</a>
+                                </li>
+                            </ul>
+                        </td>-->
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col l4 m2"></div>
+        
+    </div>
+                
+    <!--<ul>
+        <li>
+            <a href="{{ path('soporte_new') }}">Create a new soporte</a>
+        </li>
+    </ul>-->
+    <script>
+        $(function(){
+
+            $('.mis_soportes').click(function(){
+                  console.log("voy a cargar la vista inicio");
+                  $("#contenedor").load('{{ path('mis_soportes') }} #contenedor_misSoportes');
+
+            });
+
+            $('.crear_soportes').click(function(){
+                  console.log("voy a cargar la vista inicio");
+                  $("#contenedor").load('{{ path('soporte_new') }} ');
+
+            });
+            
+
+            $("#contenedor").on("submit","#formRegistroSoporte",function(e){
+                e.preventDefault();
+                var data = $(this).serialize();
+                registrar("{{ path('soporte_new')}}",data);
+            });
+            
+        });
+
+        function vaciar(){
+             $('#appbundle_soporte_asunto').val("");
+             $('#appbundle_soporte_descripcion').val("");
+        }
+        function registrar($url,$data){
+
+            $.ajax({
+                type: "POST",
+                url: $url,
+                data: $data,
+                success: function(resultado){
+                    console.log(resultado.status);
+                    if(resultado.status==200){
+                        var alert="<div><span>Registrado correctamente</span></div>"
+                         Materialize.toast(alert, 4000)
+                        vaciar();
+
+                    }
+
+                    
+                     
+                  
+        
+                }
+            });
+        }
+    
+    </script>
+    </div>
+{% endblock %}
+
+

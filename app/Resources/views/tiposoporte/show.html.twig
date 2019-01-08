@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div id="contenedor_MostrarTipoSoporte">
+        <h2>Ver Tipo de soporte</h2>
+        <div class="row">
+            <div class="col l8 m8">
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ tipoSoporte.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{ tipoSoporte.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Descripcion</th>
+                            <td>{{ tipoSoporte.descripcion }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul>
+                    <li>
+                        <a href="javascript:cargarVista('{{ path('tiposoporte_index') }}','#contenedor_tipoSoportes')">Volver</a>
+                    </li>
+                    <li>
+                        <a href="javascript:cargarVista('{{ path('tiposoporte_edit', { 'id': tipoSoporte.id }) }}','#contenedor_editarTipoSoporte')">Editar</a>
+                    </li>
+                    <li>
+                        {{ form_start(delete_form) }}
+                            <input type="submit" value="Delete">
+                        {{ form_end(delete_form) }}
+                    </li>
+                </ul>
+            </div>
+            <div class="col l4 m4"></div>
+        </div>
+    </div>            
+{% endblock %}

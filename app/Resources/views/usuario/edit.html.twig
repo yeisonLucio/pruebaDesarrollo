@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block header%}
+    
+{% endblock %}
+
+{% block main %}
+    <div id="contenedor_editarUsuario">
+        <h1>Editar Usuario</h1>
+        <div class="row">
+            <div class="col l8 m8">
+
+                {{ form_start(edit_form) }}
+
+                    <div class="">
+                        {{ form_label(edit_form.username) }}
+                        {{ form_widget(edit_form.username) }}
+                        <div id="errorUsername">
+                            {{ form_errors(edit_form.username) }}
+                        </div>
+                    </div>
+
+                    <div class="">
+                        {{ form_widget(edit_form.plainPassword) }}
+                        <div id="errorplainPassword">
+                            {{ form_errors(edit_form.plainPassword) }}
+                        </div>
+                    </div>
+                    <div class="">
+                        {{ form_widget(edit_form.nombre) }}
+                        <div id="errornombre">
+                            {{ form_errors(edit_form.nombre) }}
+                        </div>
+                    </div>
+                    <div class="">
+                        {{ form_widget(edit_form.apellido) }}
+                        <div id="errorapellido">
+                            {{ form_errors(edit_form.apellido) }}
+                        </div>
+                    </div>
+                    <div class="">
+                        {{ form_widget(edit_form.roles) }}
+                        <div id="errorRoles">
+                            {{ form_errors(edit_form.roles) }}
+                        </div>
+                    </div>
+                  
+                    <a class="btn" type="submit" href="javascript:GuardarUsuario('{{ path('usuario_edit', {'id':  usuario.id  }) }}')">Guardar</a>
+
+                {{ form_end(edit_form) }}
+
+                <ul>
+                    <li>
+                        <a href="javascript:cargarVista('{{ path('lista_usuarios') }}','#contenedor_listaUsuarios')">Volver</a>
+                    </li>
+                    <li>
+                        {{ form_start(delete_form) }}
+                            <input type="submit" value="Delete">
+                        {{ form_end(delete_form) }}
+                    </li>
+                </ul>
+            </div>
+            <div class="col l4"></div>    
+        </div>
+    </div>    
+
+    
+{% endblock %}

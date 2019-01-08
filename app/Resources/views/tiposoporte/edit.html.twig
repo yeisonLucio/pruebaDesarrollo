@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <div id="contenedor_editarTipoSoporte">
+        <h2>Editar Tipo de soporte</h2>
+        <div class="row">
+            <div class="col l8 m8">
+                {{ form_start(edit_form) }}
+                    {{ form_widget(edit_form) }}
+                    <a class="btn" type="submit" href="javascript:GuardarTipoSoporte('{{ path('tiposoporte_edit', {'id':  tipoSoporte.id  }) }}')">Guardar</a>
+                {{ form_end(edit_form) }}
+                <ul>
+                    <li>
+                        <a href="javascript:cargarVista('{{ path('tiposoporte_index') }}','#contenedor_tipoSoportes')">Volver</a>
+                    </li>
+                    <li>
+                        {{ form_start(delete_form) }}
+                            <input type="submit" value="Delete">
+                        {{ form_end(delete_form) }}
+                    </li>
+                </ul>
+            </div>
+            <div class="col l4 m4"></div>
+        </div>
+    </div>        
+    
+{% endblock %}

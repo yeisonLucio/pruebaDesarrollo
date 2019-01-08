@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block menu_nav %}
+
+    <ul class="right hide-on-med-and-down">
+      <li class="soportes"><a>Soportes</a></li>
+      <li class="clientes"><a>Clientes</a></li>
+      <li class="tipo_soportes"><a>Tipo de Soportes</a></li>
+      <li class="reportes"><a>Reportes</a></li>
+      <li class="logout"><a href="{{ path('home')}}">Salir</a></li>
+
+    </ul>
+    <ul id="slide-out" class="side-nav">
+      <li class="soportes"><a>Soportes<i class=" Tiny material-icons">home</i></a></li>
+      <li class="clientes"><a>Clinentes<i class=" Tiny material-icons">home</i></a></li>
+      <li class="tipo_soportes"><a>Tipo de Soportes<i class=" Tiny material-icons">home</i></a></li>
+      <li class="reportes"><a>Reportes<i class=" Tiny material-icons">home</i></a></li>
+      <li class="logout" ><a href="{{ path('home')}}">Salir<i class=" Tiny material-icons">account_box</i></a></li>
+    </ul>
+{% endblock %}
+
+{% block main %}
+    <div id="contenedor_listaUsuarios">
+
+        <div class="row">
+        <div class="col l8">
+            <h2>lista de usuarios</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for usuario in usuario %}
+                    <tr>
+                        <td><a href="{{ path('usuario_show', { 'id': usuario.id }) }}">{{ usuario.id }}</a></td>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.password }}</td>
+                        <td>{{ usuario.nombre }}</td>
+                        <td>{{ usuario.apellido }}</td>
+                    {% for rol in usuario.roles %}
+                        <td>
+                            {% if rol=="ROLE_ADMIN" %}
+                                Administrador
+                            {% else %}
+                                Cliente
+                            {% endif %}
+                        </td>
+                    
+                        {% endfor %}
+                        <td>
+                            <ul class="list-inline">
+                                <li>
+                                    <a id="Ver_usuario" href="javascript:cargarVista('{{ path('usuario_show', { 'id': usuario.id }) }}',' #contenedor_verUsuario')">Ver</a>
+                                </li>
+                                <li> 
+                                    <input id="id_usuario" class="hide" value='{{ usuario.id }}'/>   
+                                    <a href="javascript:cargarVista('{{ path('usuario_edit', { 'id': usuario.id }) }}','')">Editar</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <ul>
+                <li>
+                    <a id="newUsuario" class="btn">Create a new usuario</a>
+                </li>
+            </ul>
+        
+        </div>
+        <div class="col l4"></div>
+    </div>
+    
+    </div>
+    
+   
+    
+{% endblock %}

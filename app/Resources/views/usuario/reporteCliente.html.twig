@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+  {% block main %}
+    <div id="contenedor_reportePorCliente">
+        <h1>Reporte por cliente</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Total soportes</th>
+                </tr>
+            </thead>
+            <tbody>
+             {% for dato in reporte%}
+             <tr>  
+                <td>{{ dato.nombre }}</td>
+                <td>{{ dato.total }}</td>
+            </tr>
+            
+            {% endfor %}
+            
+            </tbody>
+        </table>
+
+    
+      
+    </div>
+    
+
+{% endblock %}

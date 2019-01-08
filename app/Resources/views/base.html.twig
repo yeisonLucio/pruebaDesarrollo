@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+       <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="text/sta" href="{{ asset('favicon.ico') }}" />   
+        <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/estilos.css') }}" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <script type="text/javascript" src="{{ asset('js/jquery.min.js')}}"></script>
+      <script type="text/javascript" src="{{ asset('js/materialize.min.js')}}"></script>
+    </head>
+    <body>
+      
+        <header>
+        {% block header %}
+        <nav>
+          <div class="nav-wrapper teal darken-4">
+            
+            <a href="#!" class="brand-logo">Bienvenido</a>
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+        
+            {% block menu_nav %}
+                <ul class="right hide-on-med-and-down">
+                  <li class="inicio" ><a>Inicio</a></li>
+                  <li class="login" ><a>Entrar</a></li>
+
+                </ul>
+                <ul id="slide-out" class="side-nav">
+                  <li class="inicio" ><a href="#inicio">Inicio<i class=" Tiny material-icons">home</i></a></li>
+                  <li class="login" ><a href="#login">Entrar<i class=" Tiny material-icons">account_box</i></a></li>
+                </ul>
+            {% endblock %}
+          </div>
+        </nav>
+        <!--lista del slide movil-->
+        {% endblock %}
+      </header>
+
+
+      <main id="contenedor">
+   
+    
+      {% block main %}{% endblock %}
+      <script>
+            
+            $(function(){
+
+                $(".button-collapse").sideNav();
+                $('select').material_select();
+                $('.inicio').click(function(){
+                  console.log("voy a cargar la vista inicio");
+                  $("#contenedor").load('/ #contenedor_inicio');
+
+                });
+
+            
+
+                $('.login').click(function(){
+                  console.log("voy a cargar la vista login");
+                  $("#contenedor").load('/login #contenedor_login');
+
+                });
+
+                /*$("#contenedor").on("submit","#formRegistroUsuario",function(e){
+                  e.preventDefault();
+                  $("#preload").addClass("active");
+                  var data = $(this).serialize();
+                  registrar("/usuario/registro",data);
+                });*/
+
+              });
+
+
+
+              
+            
+        </script>
+      </main>
+      <footer>
+      </footer>
+      
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+        
+       
+        
+    </body>
+</html>

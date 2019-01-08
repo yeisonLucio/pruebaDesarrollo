@@ -1,0 +1,367 @@
+{% extends 'base.html.twig' %}
+
+{% block menu_nav %}
+    
+    <ul id="dropdown1" class="dropdown-content">
+        <li><a href="javascript:cargarVista('{{ path('reporte_cliente') }}','#contenedor_reportePorCliente')">Por cliente</a></li>
+        <li><a href="javascript:cargarVista('{{ path('reporte_tipoSoporte') }}','#contenedor_reporteTipoSoporte')">Por tipo de soporte</a></li>
+       
+    </ul>
+    <ul class="right hide-on-med-and-down">
+      <!--<li><div id="Buscar">
+        <form>
+            <div class="input-field">
+                <i class="material-icons prefix">search</i>
+                <input id="search" type="text" class="validate" >
+                <label for="search">First Name</label>
+            </div>
+            
+        </form>
+    </div></li>-->
+      <li class="soportesAdmin"><a>Soportes</a></li>
+      <li class="usuarios"><a>Usuarios</a></li>
+      <li class="tipo_soportes"><a>Tipo de Soportes</a></li>
+      <li><a class="dropdown-button reportes" href="#!" data-activates="dropdown1">Reportes<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li class="logout"><a href="{{ path('logout')}}">Salir</a></li>
+
+    </ul>
+    <ul id="slide-out" class="side-nav">
+      <li class="soportesAdmin"><a>Soportes<i class=" Tiny material-icons">home</i></a></li>
+      <li class="usuarios"><a>Usuarios<i class=" Tiny material-icons">home</i></a></li>
+      <li class="tipo_soportes"><a>Tipo de Soportes<i class=" Tiny material-icons">home</i></a></li>
+      <li class="reportes"><a>Reportes<i class=" Tiny material-icons">home</i></a></li>
+      <li class="logout" ><a href="{{ path('logout')}}">Salir<i class=" Tiny material-icons">account_box</i></a></li>
+    </ul>
+
+    
+{% endblock %}
+
+{% block main %}
+    
+    <div id="contenedor_soportesAdmin">
+        
+        <div class="row">
+            <div class="col l4">
+                <h3>Lista de Soportes</h3>
+
+            </div>
+            <div class="col l4">
+                <div class="row">
+                    <div class="col l8">
+                        <div id="Buscar">
+                            <form>
+                                <div class="input-field">
+                                    <i class="material-icons prefix">search</i>
+                                    <input id="search" type="text" class="validate">
+                                    <label for="search">First Name</label>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col l4">
+                        <a id="btn_buscar" class="btn" href="javascript:Buscar()">Buscar</a>
+                    
+                    </div>
+                </div>
+               
+                
+               
+            </div>
+            <div class="col l4"></div>
+            
+            
+        </div>
+        
+        <div class="row">
+            <div class="col l7">
+                <table class="centered responsive-table bordered">
+                    <thead>
+                        <tr>
+                            <th>Asunto</th>
+                            <th>Cliente</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th>Descripción de solución</th>
+                            <th>Prioridad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for soporte in soportes %}
+                            <tr>
+                                <td>{{ soporte.asunto }}</td>
+                                <td>{{ soporte.nombreUsuario }}</td>    
+                                <td>{{ soporte.descripcion }}</td>
+                                <td>
+                                {% if soporte.estado == 1 %}
+                                    Listo
+                                 {% elseif soporte.estado == 2 %}
+                                    Por hacer
+                                 {% endif %}   
+                                </td>
+                                <td>{{ soporte.descripcionSolucion }}</td>
+                                <td>{{ soporte.prioridad }}</td>
+                                <td><a id="btn_revisar" class="btn teal darken-4 waves-effect waves-light" href="javascript:revisarSoporte('{{ path('revisar_soporte') }}', {{ soporte.id }}), cerrar()">Revisar</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <ul>
+                <!-- <li>
+                        <a href="{{ path('usuario_new') }}">Create a new usuario</a>
+                    </li>-->
+                </ul>
+            </div>
+            <div class="col l5">
+                <div id="contenedor_tomarSoporte">
+                   
+
+                </div>
+            
+            </div>
+        </div>
+        <script>
+            $(function(){
+
+                $('.soportesAdmin').click(function(){
+                    console.log("voy a cargar la vista inicio");
+                    $("#contenedor").load('{{ path('soportes_admin') }} #contenedor_soportesAdmin');
+
+                });
+                $('.soportesAdmin').click(function(){
+                    console.log("voy a cargar la vista inicio");
+                    $("#contenedor").load('{{ path('soportes_admin') }} #contenedor_soportesAdmin');
+
+                });
+                $('.usuarios').click(function(){
+                    console.log("voy a cargar la vista inicio");
+                    $("#contenedor").load('{{ path('lista_usuarios') }} #contenedor_listaUsuarios');
+
+                });
+                $('.tipo_soportes').click(function(){
+                    console.log("voy a cargar la vista inicio");
+                    $("#contenedor").load('{{ path('tiposoporte_index') }} #contenedor_tipoSoportes');
+
+                });
+                $("#contenedor").on("click","#newUsuario",function(e){
+                        $("#contenedor").load('{{ path('usuario_new') }} ');
+                   
+                });
+                
+                $("#contenedor").on("click","#btn_buscar",function(e){
+                   Buscar()
+                });
+
+
+            });
+
+            function handle(e){
+                    if(e.keyCode === 13){
+                    alert("Enter was just pressed.");
+                    }
+
+                return false;
+                }
+
+            function Buscar(){
+                $url = '{{ path('buscar') }}';
+                $nombre = $('#search').val();
+                $.ajax({
+                    type: "POST",
+                    url: $url,
+                    data: {nombre: $nombre},
+                    success: function(resultado){
+                        $("#contenedor").html(resultado);
+                        
+                    }
+                });
+
+            }
+
+            function GuardarUsuario($url){
+                var data = $("#formRegistroUsuario").serialize();
+                
+                $.ajax({
+                    type: "POST",
+                    url: $url,
+                    data: data,
+                    success: function(resultado){
+                        console.log(resultado.status);
+                        if(resultado.status==200){
+                            var alert="<div><span>Guardado correctamente</span></div>";
+                            Materialize.toast(alert, 4000)
+                            vaciarCamposUser();
+
+                        }
+                        
+                    }
+                });
+            }
+
+            function GuardarTipoSoporte($url){
+                var data = $("#formTipoSoporte").serialize();
+                
+                $.ajax({
+                    type: "POST",
+                    url: $url,
+                    data: data,
+                    success: function(resultado){
+                        console.log(resultado.status);
+                        if(resultado.status==200){
+                            var alert="<div><span>Guardado correctamente</span></div>";
+                            Materialize.toast(alert, 4000)
+                            
+
+                        }
+                        
+                    }
+                });
+            }
+
+            function cargarVista($url, $contendor){
+                console.log($url+" "+$contendor)
+                $("#contenedor").load($url+" "+$contendor);
+            }
+
+            function cerrar(){
+                $("#contenedor_tomarSoporte").removeClass("hide");
+            }
+            
+            function revisarSoporte($url,$id){
+                console.log($url+""+$id);
+                $.ajax({
+                    type: "POST",
+                    url: $url,
+                    data: {
+                        id: $id
+                    },
+                    success: function(resultado){
+                        console.log(resultado.asunto);
+                        $asunto = resultado.asunto;
+                        $descripcion = resultado.descripcion;
+                        $id = resultado.id;
+                        $estadoSoporte = "";
+                        $prioridadSoporte = "";
+                        $url = '{{ path('guardar_soporte') }}';
+                        $idUsuario = resultado.idUsuario;
+                        $idTipoSoporte = resultado.idTipoSoporte;
+
+                        $estado = "";
+                        $prioridad = "";
+                           
+                            $estado="<div class='input-field'><select id='elegir'>\
+                                        <option value='' disabled selected>Seleccionar Estado</option>\
+                                        <option value='1' id='listo' >Listo</option>\
+                                        <option value='2'>Por hacer</option>\
+                                    </select></div>";
+                            
+                            
+
+                        
+                            $prioridad="<div class='input-field'><select id='prioridad'>\
+                                        <option value='' disabled selected>Seleccionar Prioridad</option>\
+                                        <option value='1'>1</option>\
+                                        <option value='2'>2</option>\
+                                        <option value='3'>3</option>\
+                                        <option value='4'>4</option>\
+                                        <option value='5'>5</option>\
+                                    </select></div>";
+                        
+
+                        $form = "<form>"+$estado+""+$prioridad+"\
+                                    <div id='conte_descripcion' class='input-field hide'>\
+                                        <textarea id='descripcion' class='materialize-textarea '></textarea>\
+                                        <label for='descripcion'>Agregue una decripción</label>\
+                                    </div>\
+                                    <a id='btn_guardar' class='btn teal darken-4 waves-effect waves-light right'>Guardar</a>\
+                                </form>";
+                        $('#contenedor_tomarSoporte').html(
+                            "<a id='cerrar' class='btn-floating btn-large teal darken-4 waves-effect waves-light right'><i class='Tiny material-icons '>close</i></a><br><br>"+
+                            "<h4>"+resultado.asunto+"</h4>"+
+                            "<p>"+resultado.descripcion+"</p>"+
+                            $form
+                            
+                        );
+                        $('select').material_select();
+                
+                        $("#cerrar").click(function(){
+                            $('#contenedor_tomarSoporte').addClass("hide");
+                        });
+
+                        $('#elegir').change(function(){
+                            var sel = $('#elegir option:selected').val();
+                            $estadoSoporte = sel;
+                            if (sel == "1") {
+                                $("#conte_descripcion").removeClass("hide");   
+                            }else{
+                                $("#conte_descripcion").addClass("hide");
+                            }
+
+                        }); 
+
+                        $('#prioridad').change(function(){
+                            var sel = $('#prioridad option:selected').val();
+                            $prioridadSoporte = sel;
+                        }); 
+
+                        $("#btn_guardar").click(function(){
+                            guardarDatos($idTipoSoporte,$idUsuario,$prioridadSoporte,$estadoSoporte,$asunto,$id,$descripcion,$url);
+                            
+                        });
+                } 
+                });         
+            }
+
+            function guardarDatos($idTipoSoporte,$idUsuario,$prioridadSoporte,$estadoSoporte,$asunto,$id,$descripcion,$url){
+                $descripcionSolucion = $("#descripcion").val();
+                $.ajax({
+                    type: "POST",
+                    url: $url,
+                    data: {
+                        id: $id,
+                        asunto: $asunto,
+                        descripcion: $descripcion,
+                        prioridad: $prioridadSoporte,
+                        estado: $estadoSoporte,
+                        descripcionSolucion: $descripcionSolucion,
+                        idUsuario: $idUsuario,
+                        idTipoSoporte: $idTipoSoporte
+
+                    },
+                    success: function(resultado){
+                        console.log(resultado);
+                    }
+                });
+
+
+            }
+            function cargar($ruta){
+                console.log($ruta);
+                $("#contenedor").load(''+$ruta+' #contenedor_revisarSoporte');
+            }
+            function vaciarCamposUser(){
+                $('#appbundle_Usuario_username').val("");
+                $('#appbundle_Usuario_plainPassword_first').val("");
+                $('#appbundle_Usuario_plainPassword_second').val("");
+                $('#appbundle_Usuario_nombre').val("");
+                $('#appbundle_Usuario_apellido').val("");
+            }
+            function vaciar(){
+                $('#appbundle_soporte_asunto').val("");
+                $('#appbundle_soporte_descripcion').val("");
+            }
+
+    
+          
+
+
+    </script>
+    </div>
+    
+
+    
+
+    
+{% endblock %}

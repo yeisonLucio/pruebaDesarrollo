@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+
+{% endblock %}
+
+{% block main %}
+    <div id="contenedor_newUsuario">
+        
+        <h1>Usuario creation</h1>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+              <a class="btn" type="submit" href="javascript:GuardarUsuario('{{ path('usuario_new', {'id':  usuario.id  }) }}')">Guardar</a>
+        {{ form_end(form) }}
+        
+       
+        <ul>
+            <li>
+                <a href="javascript:cargarVista('{{ path('lista_usuarios') }}','#contenedor_listaUsuarios')">Volver</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

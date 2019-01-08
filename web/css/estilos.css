@@ -1,0 +1,67 @@
+.list-inline {
+    padding-left: 0;
+    margin-left: -5px;
+    list-style: none;
+  }
+  .list-inline > li {
+    display: inline-block ;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+.pelicula{
+    position: relative;
+    padding-left: 2px !important;
+
+}
+
+.img_tarjeta{
+    height: 200px;
+    
+}
+
+.con_tarjeta{
+    width: 150px !important;
+    margin: 12px;  
+    margin: 0px 0px 3px 3px !important;  
+}
+
+.con_content{
+    margin-bottom: 0px !important;
+    padding: 2px 10px 10px !important;
+    
+}
+
+.titulo{
+    
+    font-size: 15px !important;
+}
+.con_titulo{
+    margin-bottom: 0px !important;
+}
+
+.con_sinopsis{
+    padding: 12px !important;
+}
+
+#contenedorFormLogin{
+    margin-top: 60px;
+    padding: 10px 20px 50px 20px;
+    border-radius: 10px;
+    
+}
+#contenedorFormRegistro{
+    margin-top: 40px;
+    padding: 10px 20px 50px 20px;
+    border-radius: 10px;
+    
+}
+
+.preloadCont{
+    margin: 0;
+}
+
+#btn_buscar{
+    margin-top: 20px;
+} 
+

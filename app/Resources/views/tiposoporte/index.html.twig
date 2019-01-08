@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div id="contenedor_tipoSoportes">
+        <div class="row">
+            <div class="col l8">
+                <h2>Tipos de soportes</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for tipoSoporte in tipoSoportes %}
+                        <tr>
+                            <td><a href="{{ path('tiposoporte_show', { 'id': tipoSoporte.id }) }}">{{ tipoSoporte.id }}</a></td>
+                            <td>{{ tipoSoporte.nombre }}</td>
+                            <td>{{ tipoSoporte.descripcion }}</td>
+                        
+                            <td>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:cargarVista('{{ path('tiposoporte_show', { 'id': tipoSoporte.id }) }}',' #contenedor_MostrarTipoSoporte')">ver</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:cargarVista('{{ path('tiposoporte_edit', { 'id': tipoSoporte.id }) }}','#contenedor_editarTipoSoporte')">Editar</a>
+                                
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <ul>
+                    <li>
+                        <a href="javascript:cargarVista('{{ path('tiposoporte_new') }}','#contenedor_newTipoSoporte')">Crear tipo de soporte</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col l4"></div>
+        </div>
+    </div>
+{% endblock %}
